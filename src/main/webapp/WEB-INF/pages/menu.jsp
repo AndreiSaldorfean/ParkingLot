@@ -14,6 +14,10 @@
                            href="${pageContext.request.contextPath}/about.jsp">About</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link"  aria-current="page"
+                           href="${pageContext.request.contextPath}/Users">Users</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link ${activePage eq 'active' ? ' active' : ''}"
                            aria-current="page"
                            href="${pageContext.request.contextPath}/Cars">Cars</a>
