@@ -3,9 +3,11 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <t:pageTemplate pageTitle="Cars">
     <h1>Cars</h1>
+    <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
     <a href="${pageContext.request.contextPath}/AddCar">
         <button class="w-20 btn btn-primary btn-lg" type="submit">Add Car</button>
     </a>
+    </c:if>
     <form method="POST" action="${pageContext.request.contextPath}/Cars">
     <div class="container text-center">
         <c:forEach var="car" items="${cars}">
@@ -20,12 +22,18 @@
                         ${car.ownerName}
                 </div>
             </div>
-            <a class="btn btn-secondary" href="${pageContext.request.contextPath}/EditCar?id=${car.id}">Edit Car</a>
+            <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
+                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/EditCar?id=${car.id}">Edit Car</a>
+            </c:if>
             <div class="col">
-                <input type="checkbox" name="car_ids" value="${car.id}"/>
+                <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
+                    <input type="checkbox" name="car_ids" value="${car.id}"/>
+                </c:if>
             </div>
         </c:forEach>
-        <button class="btn btn-danger" type="submit">Delete Car</button>
+        <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
+            <button class="btn btn-danger" type="submit">Delete Car</button>
+        </c:if>
     </div>
     </form>
     <h5>Free parking spots: ${numberOfFreeParkingSpots}</h5>
