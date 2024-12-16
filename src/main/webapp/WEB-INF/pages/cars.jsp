@@ -9,31 +9,36 @@
     </a>
     </c:if>
     <form method="POST" action="${pageContext.request.contextPath}/Cars">
+    <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
+        <button class="w-20 btn btn-danger btn-md mt-2  " type="submit">Delete Car</button>
+    </c:if>
     <div class="container text-center">
         <c:forEach var="car" items="${cars}">
-            <div class="row">
+            <div class="row mb-4">
+                <div class="col">
+                    <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
+                        <div class="col">
+                            <input type="checkbox" name="car_ids" value="${car.id}"/>
+                        </div>
+                    </c:if>
+                </div>
                 <div class="col">
                         ${car.licensePlate}
                 </div>
+
                 <div class="col">
                         ${car.parkingSpot}
                 </div>
                 <div class="col">
                         ${car.ownerName}
                 </div>
-            </div>
-            <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
-                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/EditCar?id=${car.id}">Edit Car</a>
-            </c:if>
-            <div class="col">
                 <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
-                    <input type="checkbox" name="car_ids" value="${car.id}"/>
+                    <div class="col">
+                        <a class="btn btn-secondary" href="${pageContext.request.contextPath}/EditCar?id=${car.id}">Edit Car</a>
+                    </div>
                 </c:if>
             </div>
         </c:forEach>
-        <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
-            <button class="btn btn-danger" type="submit">Delete Car</button>
-        </c:if>
     </div>
     </form>
     <h5>Free parking spots: ${numberOfFreeParkingSpots}</h5>
