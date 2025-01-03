@@ -1,5 +1,7 @@
 package com.parking.parkinglot.ejb;
 
+import com.parking.parkinglot.common.CarDto;
+import com.parking.parkinglot.entities.Car;
 import com.parking.parkinglot.entities.User;
 import com.parking.parkinglot.entities.UserGroup;
 import com.parking.parkinglot.common.UserDto;
@@ -69,5 +71,27 @@ public class UserBean {
             userGroup.setUserGroup(group);
             entityManager.persist(userGroup);
         }
+    }
+
+    public UserDto findById(Long userId){
+        LOG.info("findById");
+
+        try {
+            TypedQuery<User> typedQuery = entityManager.createQuery("SELECT u FROM User u WHERE u.id like "+userId.toString(), User.class);
+            return new UserDto(typedQuery.getSingleResult().getId(),
+                    typedQuery.getSingleResult().getUsername(),
+                    typedQuery.getSingleResult().getEmail(),
+                    typedQuery.getSingleResult().getPassword());
+        }catch(Exception e){
+            throw new EJBException(e);
+        }
+    }
+
+    public void updateUser(Long userId,String username, String email, String password){
+        LOG.info("updateUser");
+        User user = entityManager.find(User.class, userId);
+        user.setUsername(username);
+        user.setEmail(email);
+        if(!password.isEmpty())user.setPassword(password);
     }
 }

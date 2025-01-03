@@ -1,4 +1,4 @@
-package com.parking.parkinglot.servlet;
+package com.parking.parkinglot.servlet.users;
 
 import com.parking.parkinglot.common.UserDto;
 import com.parking.parkinglot.ejb.InvoiceBean;
@@ -14,11 +14,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@DeclareRoles({"READ_USERS", "WRITE_USERS"})
+@DeclareRoles({"READ_USERS", "WRITE_USERS","INVOICING"})
 @ServletSecurity
         (
                 value = @HttpConstraint(rolesAllowed = {"READ_USERS"}),
-                httpMethodConstraints = {@HttpMethodConstraint(value = "POST", rolesAllowed = {"WRITE_USERS"})}
+                httpMethodConstraints = {@HttpMethodConstraint(value = "POST", rolesAllowed = {"WRITE_USERS","INVOICING"})}
         )
 @WebServlet(name = "Users", value = "/Users")
 public class Users extends HttpServlet {
@@ -39,7 +39,7 @@ public class Users extends HttpServlet {
             Collection<String> usernames = usersBean.findUsernameByUserId(invoicesBean.getUserIds());
             request.setAttribute("invoices", usernames);
         }
-        request.getRequestDispatcher("/WEB-INF/pages/users.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/users/users.jsp").forward(request, response);
     }
 
     @Override

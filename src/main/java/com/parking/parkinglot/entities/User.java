@@ -1,6 +1,7 @@
 package com.parking.parkinglot.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +13,6 @@ public class User {
     private String username;
     private String email;
     private String password;
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Car> cars = new ArrayList<>();
@@ -36,6 +29,8 @@ public class User {
         this.cars = cars;
     }
 
+    @Basic
+    @Column(unique = true,nullable = false,length = 100)
     public String getUsername() {
         return username;
     }
@@ -58,5 +53,15 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    @Email
+    @Column(unique = true,nullable = false,length = 100)
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

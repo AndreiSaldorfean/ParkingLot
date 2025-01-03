@@ -1,4 +1,4 @@
-package com.parking.parkinglot.servlet;
+package com.parking.parkinglot.servlet.cars;
 
 import com.parking.parkinglot.common.CarDto;
 import com.parking.parkinglot.ejb.CarsBean;
@@ -28,10 +28,11 @@ public class Cars extends HttpServlet {
             response) throws ServletException, IOException {
 
         List<CarDto> cars = carsBean.findAllCars();
+        Long numOfAllocatedSpots = carsBean.getNumberOfCars();
         request.setAttribute("cars", cars);
-        request.setAttribute("numberOfFreeParkingSpots", 10);
+        request.setAttribute("numberOfFreeParkingSpots", 10- numOfAllocatedSpots);
         request.setAttribute("activePage", "active");
-        request.getRequestDispatcher("/WEB-INF/pages/cars.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/cars/cars.jsp").forward(request, response);
     }
 
     @Override

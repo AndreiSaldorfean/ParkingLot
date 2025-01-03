@@ -106,6 +106,7 @@ public class CarsBean {
         entityManager.persist(photo);
     }
     public CarPhotoDto findPhotoByCarId(Integer carId) {
+        LOG.info("findPhotoByCarId");
         List<CarPhoto> photos = entityManager
                 .createQuery("SELECT p FROM CarPhoto p where p.car.id = :id", CarPhoto.class)
                 .setParameter("id", carId)
@@ -118,4 +119,10 @@ public class CarsBean {
                 photo.getFileContent());
     }
 
+    public Long getNumberOfCars() {
+        LOG.info("getNumberOfCars");
+        TypedQuery<Long> typedQuery = entityManager.createQuery("SELECT COUNT(c) FROM Car c", Long.class);
+        Long totalRows = typedQuery.getSingleResult();
+        return totalRows;
+    }
 }
