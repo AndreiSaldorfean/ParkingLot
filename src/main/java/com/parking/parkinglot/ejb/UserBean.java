@@ -10,6 +10,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Logger;
 
@@ -36,6 +37,14 @@ public class UserBean {
         }
     }
 
+    public Collection<String> findUsernameByUserId(Collection<Long> userIds) {
+        LOG.info("findUsernameByUserId");
+        List<String> usernames =
+                entityManager.createQuery("SELECT u.username FROM User u WHERE u.id IN :userIds", String.class)
+                    .setParameter("userIds",userIds)
+                    .getResultList();
+        return usernames;
+    }
     private List<UserDto> copyUsersToDto(List<User> users){
         List<UserDto> temp = new java.util.ArrayList<>(List.of());
         for(User user : users){

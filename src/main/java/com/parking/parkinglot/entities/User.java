@@ -21,7 +21,7 @@ public class User {
         this.email = email;
     }
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Car> cars = new ArrayList<>();
 
     @Id

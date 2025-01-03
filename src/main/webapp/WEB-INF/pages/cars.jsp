@@ -10,7 +10,7 @@
     </c:if>
     <form method="POST" action="${pageContext.request.contextPath}/Cars">
     <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
-        <button class="w-20 btn btn-danger btn-md mt-2  " type="submit">Delete Car</button>
+        <button class="w-20 btn btn-danger btn-md mt-2" type="submit">Delete Car</button>
     </c:if>
     <div class="container text-center">
         <c:forEach var="car" items="${cars}">
@@ -32,7 +32,13 @@
                 <div class="col">
                         ${car.ownerName}
                 </div>
+                <div class="col">
+                    <img src="${pageContext.request.contextPath}/CarPhotos?id=${car.id}" width="48"/>
+                </div>
                 <c:if test="${pageContext.request.isUserInRole('WRITE_CARS')}">
+                    <div class="col">
+                        <a class="btn btn-secondary" href="${pageContext.request.contextPath}/AddCarPhoto?id=${car.id}" role="button">Add photo</a>
+                    </div>
                     <div class="col">
                         <a class="btn btn-secondary" href="${pageContext.request.contextPath}/EditCar?id=${car.id}">Edit Car</a>
                     </div>
